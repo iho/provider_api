@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from api.models import Country, Domain, Pub, Provider, PrList
+
+from api.models import Country, Domain, PrList, Provider, Pub
 
 
 class CountrySerializer(serializers.ModelSerializer):
@@ -31,23 +32,34 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 
 class PrListSerializer(serializers.ModelSerializer):
-    
+
     pub_id = serializers.PrimaryKeyRelatedField(many=True, read_only=False,
-            queryset=Pub.objects.all(), source='pubs')
+                                                queryset=Pub.objects.all(), source='pubs')
+
     class Meta:
         model = PrList
         fields = (
-                'id',
-                'country', 
-                'source', 
-                'pub_id',
-                # 'pubs',
-                'root_list',
-                'list_name',
-                'creation_date',
-                'modify_date',
-                'list_type', 
-                'bid',
-                'list_id_on_src',
-                'archived'
-                )
+            'id',
+            'country',
+            'source',
+            'pub_id',
+            # 'pubs',
+            'root_list',
+            'list_name',
+            'creation_date',
+            'modify_date',
+            'list_type',
+            'bid',
+            'list_id_on_src',
+            'archived'
+        )
+
+
+class MovePrListSerializer(serializers.Serializer):
+    to = serializers.IntegerField(required=True)
+    pub_ids = serializers.ListField(
+        child=serializers.IntegerField(), required=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['from'] = serializers.IntegerField(required=True)

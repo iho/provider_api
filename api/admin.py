@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Country, Domain, Pub, Provider, PrList
+from .models import Country, Domain, PrList, Provider, Pub
 
 
 class CountryAdmin(admin.ModelAdmin):

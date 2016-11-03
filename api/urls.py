@@ -1,7 +1,8 @@
-from api.views import CountryViewSet, DomainViewSet, PubViewSet, ProviderViewSet, PrListViewSet
+from django.conf.urls import include, url
 from rest_framework import routers
 
-from django.conf.urls import url, include
+from api.views import (CountryViewSet, DomainViewSet, PrListViewSet,
+                       ProviderViewSet, PubViewSet)
 
 router = routers.SimpleRouter()
 router.register(r'country', CountryViewSet)
