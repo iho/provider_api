@@ -31,7 +31,23 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 
 class PrListSerializer(serializers.ModelSerializer):
-
+    
+    pub_id = serializers.PrimaryKeyRelatedField(many=True, read_only=False,
+            queryset=Pub.objects.all(), source='pubs')
     class Meta:
         model = PrList
-        fields = '__all__'
+        fields = (
+                'id',
+                'country', 
+                'source', 
+                'pub_id',
+                # 'pubs',
+                'root_list',
+                'list_name',
+                'creation_date',
+                'modify_date',
+                'list_type', 
+                'bid',
+                'list_id_on_src',
+                'archived'
+                )

@@ -43,6 +43,12 @@ class Provider(models.Model):
 
 
 class PrList(models.Model):
+    BLACK = 1
+    WHITE = 2
+    LIST_TYPES = (
+            (BLACK, "1-блеклист"),
+            (WHITE,  "2-вайтлист")
+            )
     country = models.ForeignKey(
         Country, on_delete=models.CASCADE, verbose_name="Страна")
     source = models.ForeignKey(
@@ -53,10 +59,11 @@ class PrList(models.Model):
 
     list_name = models.CharField(
         unique=True, max_length=200, verbose_name="Название списка")
-    creation_date = models.DateTimeField(verbose_name="Дата создания")
+    creation_date = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     modify_date = models.DateTimeField(verbose_name="Дата обновления")
-    list_type = models.IntegerField(
-        default=0, verbose_name="Тип списка: 1-блеклист, 2-вайтлист")  # 1-black, 2- white
+    list_type = models.SmallIntegerField(
+        default=0, verbose_name="Тип списка", 
+        choices=LIST_TYPES) 
     bid = models.FloatField(default=0, verbose_name="Бид")
     list_id_on_src = models.IntegerField(
         default=None, verbose_name="ID в источнике")
